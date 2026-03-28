@@ -1,0 +1,136 @@
+{
+  "info": {
+    "name": "Student Management API",
+    "_postman_id": "sm-api-collection-v2",
+    "description": "CRUD + Pagination API collection for the Student Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:3000/api" },
+    { "key": "student_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/health" }
+      }
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students (paginated)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/students?page=1&limit=10",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "search", "value": "", "disabled": true },
+                { "key": "department", "value": "", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Students (search)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/students?page=1&limit=5&search=aarav",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "5" },
+                { "key": "search", "value": "aarav" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Student By ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/students/{{student_id}}" }
+          }
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Arjun\",\n  \"last_name\": \"Verma\",\n  \"email\": \"arjun.verma@college.edu\",\n  \"phone\": \"9123456789\",\n  \"enrollment_no\": \"ENR2024006\",\n  \"department\": \"Computer Science\",\n  \"semester\": 4\n}"
+            },
+            "url": { "raw": "{{base_url}}/students" }
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"department\": \"Information Technology\",\n  \"semester\": 5\n}"
+            },
+            "url": { "raw": "{{base_url}}/students/{{student_id}}" }
+          }
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/students/{{student_id}}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Marks",
+      "item": [
+        {
+          "name": "Get Marks By Student",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/students/{{student_id}}/marks" }
+          }
+        },
+        {
+          "name": "Add / Update Mark (upsert)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject_id\": 3,\n  \"marks_obtained\": 87.5,\n  \"exam_type\": \"Final\",\n  \"exam_date\": \"2024-11-20\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/students/{{student_id}}/marks" }
+          }
+        },
+        {
+          "name": "Delete Mark",
+          "request": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/marks/1" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subjects",
+      "item": [
+        {
+          "name": "Get All Subjects",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/subjects" }
+          }
+        }
+      ]
+    }
+  ]
+}
