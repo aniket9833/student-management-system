@@ -16,8 +16,6 @@ const DEPARTMENTS = [
   'Electronics',
   'Mechanical Engineering',
   'Civil Engineering',
-  'Mathematics',
-  'Physics',
 ];
 
 const TextField = ({

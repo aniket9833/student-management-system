@@ -19,7 +19,7 @@ const MarksModal = ({ student, onClose }) => {
     if (!student) return;
     Promise.all([
       marksService.getByStudent(student.id),
-      marksService.getSubjects(),
+      marksService.getSubjects(student.department, student.semester),
     ])
       .then(([mRes, sRes]) => {
         setMarks(mRes.data.data);

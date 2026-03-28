@@ -129,6 +129,19 @@
             "method": "GET",
             "url": { "raw": "{{base_url}}/subjects" }
           }
+        },
+        {
+          "name": "Get Subjects by Department & Semester",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/subjects?department=Computer Science&semester=6",
+              "query": [
+                { "key": "department", "value": "Computer Science" },
+                { "key": "semester", "value": "6" }
+              ]
+            }
+          }
         }
       ]
     }

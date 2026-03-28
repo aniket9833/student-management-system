@@ -27,12 +27,7 @@ export const upsert = async ({
      DO UPDATE SET marks_obtained = EXCLUDED.marks_obtained,
                    exam_date      = EXCLUDED.exam_date
      RETURNING *`,
-    [
-      student_id,
-      subject_id,
-      marks_obtained,
-      exam_date || null,
-    ],
+    [student_id, subject_id, marks_obtained, exam_date || null],
   );
   return result.rows[0];
 };
@@ -46,5 +41,18 @@ export const remove = async (id) => {
 
 export const findAllSubjects = async () => {
   const result = await query(`SELECT * FROM subjects ORDER BY name`);
+  return result.rows;
+};
+
+export const findSubjectsByDepartmentAndSemester = async (
+  department,
+  semester,
+) => {
+  const result = await query(
+    `SELECT * FROM subjects 
+     WHERE department = $1 AND semester = $2 
+     ORDER BY name`,
+    [department, semester],
+  );
   return result.rows;
 };

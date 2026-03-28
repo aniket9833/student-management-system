@@ -41,10 +41,21 @@ export const deleteMark = async (req, res) => {
   }
 };
 
-// GET /api/subjects
+// GET /api/subjects?department=...&semester=...
 export const getSubjects = async (req, res) => {
   try {
-    const subjects = await MarksModel.findAllSubjects();
+    const { department, semester } = req.query;
+
+    let subjects;
+    if (department && semester) {
+      subjects = await MarksModel.findSubjectsByDepartmentAndSemester(
+        department,
+        parseInt(semester, 10),
+      );
+    } else {
+      subjects = await MarksModel.findAllSubjects();
+    }
+
     return successRes(res, 200, 'Subjects fetched successfully', subjects);
   } catch (err) {
     return errorRes(res, 500, 'Failed to fetch subjects', err);
