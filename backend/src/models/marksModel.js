@@ -2,8 +2,8 @@ import { query } from '../config/db.js';
 
 export const findByStudent = async (studentId) => {
   const result = await query(
-    `SELECT m.id, m.marks_obtained, m.exam_type, m.exam_date,
-            sub.name AS subject_name, sub.code AS subject_code, sub.max_marks,
+    `SELECT m.id, m.marks_obtained, m.exam_date,
+            sub.id AS subject_id, sub.name AS subject_name, sub.max_marks,
             ROUND((m.marks_obtained / sub.max_marks) * 100, 2) AS percentage
      FROM marks m
      JOIN subjects sub ON sub.id = m.subject_id
@@ -18,13 +18,12 @@ export const upsert = async ({
   student_id,
   subject_id,
   marks_obtained,
-  exam_type,
   exam_date,
 }) => {
   const result = await query(
-    `INSERT INTO marks (student_id, subject_id, marks_obtained, exam_type, exam_date)
-     VALUES ($1,$2,$3,$4,$5)
-     ON CONFLICT (student_id, subject_id, exam_type)
+    `INSERT INTO marks (student_id, subject_id, marks_obtained, exam_date)
+     VALUES ($1,$2,$3,$4)
+     ON CONFLICT (student_id, subject_id)
      DO UPDATE SET marks_obtained = EXCLUDED.marks_obtained,
                    exam_date      = EXCLUDED.exam_date
      RETURNING *`,
@@ -32,7 +31,6 @@ export const upsert = async ({
       student_id,
       subject_id,
       marks_obtained,
-      exam_type || 'Final',
       exam_date || null,
     ],
   );

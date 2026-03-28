@@ -106,7 +106,7 @@
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"subject_id\": 3,\n  \"marks_obtained\": 87.5,\n  \"exam_type\": \"Final\",\n  \"exam_date\": \"2024-11-20\"\n}"
+              "raw": "{\n  \"subject_id\": 3,\n  \"marks_obtained\": 87.5,\n  \"exam_date\": \"2024-11-20\"\n}"
             },
             "url": { "raw": "{{base_url}}/students/{{student_id}}/marks" }
           }

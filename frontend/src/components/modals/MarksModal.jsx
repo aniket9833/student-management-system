@@ -5,7 +5,6 @@ import { alertSuccess, alertError, alertConfirm } from '../../utils/alerts';
 const EMPTY_MARK = {
   subject_id: '',
   marks_obtained: '',
-  exam_type: 'Final',
   exam_date: '',
 };
 
@@ -50,8 +49,8 @@ const MarksModal = ({ student, onClose }) => {
       const sub = subjects.find((s) => s.id === saved.subject_id);
       const enriched = {
         ...saved,
+        subject_id: saved.subject_id,
         subject_name: sub?.name,
-        subject_code: sub?.code,
         max_marks: sub?.max_marks,
         percentage: sub?.max_marks
           ? ((saved.marks_obtained / sub.max_marks) * 100).toFixed(2)
@@ -128,7 +127,7 @@ const MarksModal = ({ student, onClose }) => {
                     </h6>
                     <form onSubmit={handleSave}>
                       <div className="row g-2">
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                           <select
                             name="subject_id"
                             className="form-select"
@@ -158,24 +157,6 @@ const MarksModal = ({ student, onClose }) => {
                             onChange={handleChange}
                             required
                           />
-                        </div>
-
-                        <div className="col-md-3">
-                          <select
-                            name="exam_type"
-                            className="form-select"
-                            value={form.exam_type}
-                            onChange={handleChange}
-                          >
-                            {[
-                              'Final',
-                              'Midterm',
-                              'Assignment',
-                              'Practical',
-                            ].map((t) => (
-                              <option key={t}>{t}</option>
-                            ))}
-                          </select>
                         </div>
 
                         <div className="col-md-3">
@@ -217,11 +198,9 @@ const MarksModal = ({ student, onClose }) => {
                       <thead className="table-light">
                         <tr>
                           <th>Subject</th>
-                          <th>Code</th>
                           <th>Marks</th>
                           <th>Max</th>
                           <th>%</th>
-                          <th>Type</th>
                           <th>Date</th>
                           <th></th>
                         </tr>
@@ -230,21 +209,19 @@ const MarksModal = ({ student, onClose }) => {
                         {marks.map((m) => (
                           <tr key={m.id}>
                             <td className="fw-semibold">{m.subject_name}</td>
-                            <td>
-                              <span className="badge bg-secondary">
-                                {m.subject_code}
-                              </span>
-                            </td>
                             <td className="fw-bold">{m.marks_obtained}</td>
                             <td className="text-muted">{m.max_marks || 100}</td>
                             <td>
                               <span
-                                className={`badge ${parseFloat(m.percentage) >= 60 ? 'bg-success' : 'bg-warning text-dark'}`}
+                                className={`badge ${
+                                  parseFloat(m.percentage) >= 60
+                                    ? 'bg-success'
+                                    : 'bg-warning text-dark'
+                                }`}
                               >
                                 {m.percentage}%
                               </span>
                             </td>
-                            <td>{m.exam_type}</td>
                             <td className="text-muted small">
                               {m.exam_date
                                 ? new Date(m.exam_date).toLocaleDateString()

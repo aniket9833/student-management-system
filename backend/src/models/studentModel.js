@@ -59,8 +59,8 @@ export const findById = async (id) => {
 
   const marksResult = await query(
     `SELECT
-       m.id, m.marks_obtained, m.exam_type, m.exam_date,
-       sub.id AS subject_id, sub.name AS subject_name, sub.code AS subject_code,
+       m.id, m.marks_obtained, m.exam_date,
+       sub.id AS subject_id, sub.name AS subject_name,
        sub.max_marks,
        ROUND((m.marks_obtained / sub.max_marks) * 100, 2) AS percentage
      FROM marks m

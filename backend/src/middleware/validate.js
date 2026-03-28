@@ -59,7 +59,6 @@ export const validateUpdateStudent = [
 export const validateMark = [
   body('subject_id').isInt({ min: 1 }).withMessage('Subject ID is required'),
   body('marks_obtained').isFloat({ min: 0 }).withMessage('Marks must be >= 0'),
-  body('exam_type').optional().trim().notEmpty(),
   body('exam_date').optional().isDate().withMessage('Invalid exam date'),
   handleValidation,
 ];
