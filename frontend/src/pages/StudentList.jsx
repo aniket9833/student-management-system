@@ -10,8 +10,6 @@ const DEPARTMENTS = [
   'Computer Science',
   'Information Technology',
   'Electronics',
-  'Mechanical Engineering',
-  'Civil Engineering',
 ];
 
 const StudentList = () => {

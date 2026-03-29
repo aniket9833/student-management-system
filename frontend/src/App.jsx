@@ -20,7 +20,7 @@ function App() {
       </main>
 
       <footer className="text-center text-muted small py-3 border-top bg-white mt-4">
-        © {new Date().getFullYear()} StudentMS — Built with React + Vite +
+        © {new Date().getFullYear()} StudentMS - Built with React + Vite +
         Node.js
       </footer>
     </div>

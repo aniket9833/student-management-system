@@ -29,9 +29,9 @@ CREATE TABLE students (
   id            SERIAL       PRIMARY KEY,
   first_name    VARCHAR(100) NOT NULL,
   last_name     VARCHAR(100) NOT NULL,
-  email         VARCHAR(255) NOT NULL UNIQUE,
+  email         VARCHAR(255) NOT NULL,
   phone         VARCHAR(20),
-  enrollment_no VARCHAR(50)  NOT NULL UNIQUE,
+  enrollment_no VARCHAR(50)  NOT NULL,
   department    VARCHAR(100),
   semester      SMALLINT     CHECK (semester BETWEEN 1 AND 10),
   is_active     BOOLEAN      NOT NULL DEFAULT TRUE,
@@ -57,6 +57,11 @@ CREATE TABLE marks (
 -- ============================================================
 CREATE INDEX idx_marks_student ON marks(student_id);
 CREATE INDEX idx_marks_subject ON marks(subject_id);
+
+-- Partial unique indexes for soft-deleted records
+-- Only enforce uniqueness on active students
+CREATE UNIQUE INDEX idx_students_email_active ON students(email) WHERE is_active = TRUE;
+CREATE UNIQUE INDEX idx_students_enrollment_no_active ON students(enrollment_no) WHERE is_active = TRUE;
 
 -- ============================================================
 -- Seed data
